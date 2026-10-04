@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Join a group on Even Pay</title>
+<!--
+  Where an Even Pay invite link points.
+
+  Chat apps only make http(s) links tappable, so the app's own evenpay://
+  scheme cannot be shared directly. This page hands the invite code to the app
+  through an Android intent URL; Chrome follows it into the app when it is
+  installed and to browser_fallback_url (the Play listing) when it is not.
+
+  Published with the privacy policy: copy legal/ into the public
+  arjunsid07/even-pay-legal repo, so this is served at
+  https://arjunsid07.github.io/even-pay-legal/join/?code=<code>
+  which is INVITE_PAGE in src/features/group/membership.ts.
+-->
+<style>
+  :root {
+    --ink: #0B1614; --body: #3A4A47; --faint: #6B7C79;
+    --teal: #0EA5A0; --on-teal: #FFFFFF; --line: #E2ECEA; --bg: #FFFFFF; --panel: #F4FAF9;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ink: #EAF6F4; --body: #B7C7C4; --faint: #839793;
+      --line: #1E2B29; --bg: #0B1211; --panel: #121C1A;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--body);
+    font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    -webkit-text-size-adjust: 100%;
+  }
+  .wrap { max-width: 440px; margin: 0 auto; padding: 56px 16px; text-align: center; }
+  .brand { display: inline-flex; align-items: center; gap: 12px; }
+  .brand span { font-size: 22px; font-weight: 700; color: var(--ink); letter-spacing: -0.4px; }
+  h1 { color: var(--ink); font-size: 26px; line-height: 1.25; letter-spacing: -0.5px; margin: 32px 0 8px; }
+  p { margin: 0 0 24px; }
+  .button {
+    display: block; padding: 15px 20px; border-radius: 14px; font-weight: 600;
+    text-decoration: none; background: var(--teal); color: var(--on-teal); margin-bottom: 12px;
+  }
+  .secondary { background: transparent; color: var(--teal); border: 1px solid var(--line); }
+  .code {
+    display: inline-block; background: var(--panel); border: 1px solid var(--line);
+    border-radius: 10px; padding: 6px 12px; font: 600 15px/1.4 ui-monospace, monospace; color: var(--ink);
+  }
+  .faint { color: var(--faint); font-size: 14px; margin-top: 28px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand">
+    <svg width="34" height="18" viewBox="10 25 80 55" aria-hidden="true">
+      <g fill="#0EA5A0" stroke="#0EA5A0" stroke-width="3" stroke-linejoin="round">
+        <rect x="16" y="34" width="48" height="12" rx="6"/>
+        <path d="M64 27 L88 40 L64 53 Z"/>
+        <rect x="36" y="58" width="48" height="12" rx="6"/>
+        <path d="M36 51 L12 64 L36 77 Z"/>
+      </g>
+    </svg>
+    <span>Even Pay</span>
+  </div>
+
+  <h1 id="title">You have been invited to a group</h1>
+  <p id="lede">Open it in Even Pay to see the group’s expenses and split new ones.</p>
+
+  <a class="button" id="open" href="#">Open in Even Pay</a>
+  <a class="button secondary" id="install"
+     href="https://play.google.com/store/apps/details?id=com.simpletoolslabs.evenpay">Get Even Pay</a>
+
+  <p class="faint" id="after">
+    Just installed it? Sign in, then come back and tap “Open in Even Pay” again.<br>
+    Invite code <span class="code" id="code">—</span>
+  </p>
+</div>
+<script>
+  (function () {
+    var PACKAGE = 'com.simpletoolslabs.evenpay';
+    var PLAY = 'https://play.google.com/store/apps/details?id=' + PACKAGE;
+    var raw = new URLSearchParams(location.search).get('code') || '';
+    // Invite codes are hex (0001_init.sql). Anything else is not one of ours,
+    // and must not be passed through into a URL the app will act on.
+    var code = /^[0-9a-f]{6,32}$/i.test(raw) ? raw.toLowerCase() : '';
+
+    var open = document.getElementById('open');
+    if (!code) {
+      document.getElementById('title').textContent = 'This invite link is incomplete';
+      document.getElementById('lede').textContent =
+        'Ask whoever sent it to share the link again from the group’s settings.';
+      open.style.display = 'none';
+      document.getElementById('after').style.display = 'none';
+      return;
+    }
+
+    document.getElementById('code').textContent = code;
+    var isAndroid = /android/i.test(navigator.userAgent);
+    open.href = isAndroid
+      ? 'intent://join/' + code + '#Intent;scheme=evenpay;package=' + PACKAGE +
+        ';S.browser_fallback_url=' + encodeURIComponent(PLAY) + ';end'
+      : 'evenpay://join/' + code;
+
+    // Straight into the app on Android. The buttons stay for anyone whose
+    // browser blocks a navigation it did not see a tap for.
+    if (isAndroid) location.href = open.href;
+  })();
+</script>
+</body>
+</html>
