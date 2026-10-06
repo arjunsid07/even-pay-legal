@@ -40,23 +40,22 @@ time, not by a browser. It needs all of:
   registered for Google sign-in is a different digest of the same certificate
   and will not work here.
 
-  **The upload key is in. The Play App Signing key is not, and that is the one
-  that matters for anybody installing from Play.** An app installed from Play
-  carries Google's signature, not yours, so until that fingerprint is added the
-  link verifies for a locally built APK and for nothing else.
+  **Both are present.** There are two because there are two signing
+  certificates, and an install can carry either:
 
-  Get it from Play Console → the app → Test and release → Setup → App signing →
-  "App signing key certificate" → SHA-256, and add it as a second string in the
-  array. Google holds that key; it cannot be derived from anything in either
-  repo.
+  - **Play App Signing** (`B1:E1:70:…`) — what every install from Play carries.
+    Play strips the uploaded signature and re-signs with a key Google holds, so
+    without this one not a single tester would verify. It exists only in Play
+    Console → Test and release → Setup → App signing → "App signing key
+    certificate" → SHA-256, and cannot be derived from anything in either repo.
+  - **Upload key** (`B9:39:91:…`) — what a locally built APK carries, read off
+    the keystore in the app repo:
+
+        keytool -list -v -keystore credentials/upload-keystore.jks -alias upload
 
   Put nothing in that array that is not a real fingerprint. A placeholder is not
   an empty slot — an unparseable entry risks invalidating the whole statement,
-  taking the valid fingerprint beside it down too.
-
-  The upload key's own SHA-256 came from the keystore in the app repo:
-
-      keytool -list -v -keystore credentials/upload-keystore.jks -alias upload
+  taking the valid fingerprints beside it down too.
 - **`content-type: application/json`**, set in `next.config.ts`.
 - **To be served from the apex directly.** `evenpay.co.in` is the declared host,
   so `www` must redirect *to* the apex and not the other way round. Vercel's
