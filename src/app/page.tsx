@@ -44,13 +44,18 @@ const SCREENS = [
   },
   {
     src: '/screens/group.png',
-    alt: 'A group screen listing its expenses and each member’s balance',
+    alt: 'A group screen listing its expenses with what each one is worth to you',
     label: 'A group keeps its own history and balances',
   },
   {
-    src: '/screens/expenses.png',
-    alt: 'A list of expenses grouped under month headings',
-    label: 'Every expense, grouped by month',
+    src: '/screens/add.png',
+    alt: 'The add expense form, showing a four-way split preview with equal shares',
+    label: 'The split is worked out as you type',
+  },
+  {
+    src: '/screens/ledger.png',
+    alt: 'The ledger screen, showing a month total and what is still to come back',
+    label: 'A personal ledger of what you actually paid',
   },
   {
     src: '/screens/friends.png',
@@ -59,7 +64,7 @@ const SCREENS = [
   },
   {
     src: '/screens/activity.png',
-    alt: 'The activity screen with a search field over past expenses',
+    alt: 'The activity screen listing every expense in date order',
     label: 'Search everything you have ever recorded',
   },
 ];
