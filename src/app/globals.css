@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+/*
+ * The app's own palette, so the site and the thing it is selling look like one
+ * product. Values are lifted from src/theme.ts in the app repo -- the dark set
+ * is the app's dark theme, and the light set is NOT a lightened version of it
+ * but the app's own light theme, which picks a deeper teal because the bright
+ * one is unreadable on white.
+ */
+@theme {
+  --color-ink: #07100F;
+  --color-surface: #0E1A19;
+  --color-raised: #14201F;
+  --color-line: rgba(255, 255, 255, 0.10);
+  --color-cream: #F2FBF9;
+  --color-muted: #A9C2BE;
+  --color-faint: #7D9A96;
+  --color-teal: #2DD4BF;
+  --color-action: #12B39B;
+  --color-on-teal: #04302B;
+
+  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* The policy's deep links (#delete) land under the sticky header otherwise. */
+  scroll-padding-top: 6rem;
+}
+
+body {
+  background: var(--color-ink);
+  color: var(--color-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
