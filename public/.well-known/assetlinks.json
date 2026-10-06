@@ -5,8 +5,7 @@
       "namespace": "android_app",
       "package_name": "com.simpletoolslabs.evenpay",
       "sha256_cert_fingerprints": [
-        "REPLACE_WITH_PLAY_APP_SIGNING_SHA256",
-        "REPLACE_WITH_UPLOAD_KEY_SHA256"
+        "B9:39:91:AB:C0:F9:51:65:55:CA:1F:DA:87:DF:A4:A8:C0:A4:49:29:E3:B6:80:73:1A:84:F1:48:72:DF:E3:72"
       ]
     }
   }

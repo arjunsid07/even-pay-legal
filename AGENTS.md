@@ -36,9 +36,27 @@ web page for anybody without the app — a static page can only read `?code=`.
 `public/.well-known/assetlinks.json` is read by Android's verifier at install
 time, not by a browser. It needs all of:
 
-- **Real SHA-256 fingerprints.** Both of them — Play App Signing *and* the
-  upload key. The SHA-1 registered for Google sign-in is a different digest and
-  will not work. From Play Console → Test and release → Setup → App signing.
+- **Real SHA-256 fingerprints**, one per signing certificate. The SHA-1
+  registered for Google sign-in is a different digest of the same certificate
+  and will not work here.
+
+  **The upload key is in. The Play App Signing key is not, and that is the one
+  that matters for anybody installing from Play.** An app installed from Play
+  carries Google's signature, not yours, so until that fingerprint is added the
+  link verifies for a locally built APK and for nothing else.
+
+  Get it from Play Console → the app → Test and release → Setup → App signing →
+  "App signing key certificate" → SHA-256, and add it as a second string in the
+  array. Google holds that key; it cannot be derived from anything in either
+  repo.
+
+  Put nothing in that array that is not a real fingerprint. A placeholder is not
+  an empty slot — an unparseable entry risks invalidating the whole statement,
+  taking the valid fingerprint beside it down too.
+
+  The upload key's own SHA-256 came from the keystore in the app repo:
+
+      keytool -list -v -keystore credentials/upload-keystore.jks -alias upload
 - **`content-type: application/json`**, set in `next.config.ts`.
 - **To be served from the apex directly.** `evenpay.co.in` is the declared host,
   so `www` must redirect *to* the apex and not the other way round. Vercel's
