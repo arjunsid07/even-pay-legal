@@ -11,6 +11,7 @@ Next.js (App Router) + Tailwind, deployed on Vercel. Every route is static.
 | `/privacy` | the privacy policy. `#delete` is the account-deletion section Play links to separately |
 | `/join/?code=…` | where an invite link points, seen only by somebody without the app installed |
 | `/.well-known/assetlinks.json` | what makes an invite link open the app rather than a browser |
+| `/pocket-scanner/` | Pocket Scanner, a separate app: its landing page, and `/pocket-scanner/terms/`, the terms URL in its Play listing. Its own header and footer; Even Pay's live in the `(evenpay)` route group |
 
 ## Running it
 
