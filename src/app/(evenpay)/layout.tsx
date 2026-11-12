@@ -17,6 +17,9 @@ export default function EvenPayLayout({ children }: { children: React.ReactNode 
             <Wordmark />
           </Link>
           <div className="flex items-center gap-6 text-sm">
+            <Link href="/terms" className="hidden text-muted transition hover:text-cream sm:inline">
+              Terms
+            </Link>
             <Link href="/privacy" className="text-muted transition hover:text-cream">
               Privacy
             </Link>
@@ -41,6 +44,9 @@ export default function EvenPayLayout({ children }: { children: React.ReactNode 
           <div className="flex flex-wrap gap-x-6 gap-y-2 text-faint">
             <Link href="/privacy" className="transition hover:text-cream">
               Privacy policy
+            </Link>
+            <Link href="/terms" className="transition hover:text-cream">
+              Terms of service
             </Link>
             <Link href="/privacy#delete" className="transition hover:text-cream">
               Delete your data

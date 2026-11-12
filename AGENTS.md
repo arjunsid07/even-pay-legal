@@ -76,6 +76,12 @@ what a Play reviewer reads and what the data-safety declarations were made
 against, so its claims have to keep matching the app's actual behaviour. Restyle
 it freely; rewriting its substance means the date at the top moves too.
 
+`/terms` is Even Pay's terms of service, linked from simpletoolslabs.co.in. Its
+factual claims (no account needed, what sign-in syncs, who can edit a shared
+expense, the single banner and the upgrade that unlocks nothing else, deletion
+unlinking shared expenses) are taken from the privacy policy and the app's RLS
+migrations. When the app changes any of them, both pages change together.
+
 ## There is deliberately only one copy of the policy
 
 The site used to be a hand-copied duplicate of a `legal/` folder in the app
