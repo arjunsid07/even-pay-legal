@@ -4,9 +4,10 @@ import { PLAY_URL } from '@/lib/site';
 
 /**
  * Even Pay's header and footer. They live in this route group rather than the
- * root layout so the other apps hosted here (see `/pocket-scanner`) do not
- * carry Even Pay's branding. The group adds nothing to the URL: `/`,
- * `/privacy` and `/join` are exactly where they were.
+ * root layout so any other app hosted here would not carry Even Pay's
+ * branding. The group adds nothing to the URL: `/`, `/privacy` and `/join` are
+ * exactly where they were. (`/pocket-scanner` redirects to
+ * simpletoolslabs.co.in; see next.config.ts.)
  */
 export default function EvenPayLayout({ children }: { children: React.ReactNode }) {
   return (

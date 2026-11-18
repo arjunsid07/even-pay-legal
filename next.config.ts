@@ -13,6 +13,26 @@ const nextConfig: NextConfig = {
    */
   trailingSlash: true,
 
+  /**
+   * Pocket Scanner's pages moved to the SimpleTools Labs site, which hosts
+   * every app but Even Pay. Permanent, so old links in emails and listings
+   * keep working.
+   */
+  async redirects() {
+    return [
+      {
+        source: '/pocket-scanner',
+        destination: 'https://simpletoolslabs.co.in/pocket-scanner',
+        permanent: true,
+      },
+      {
+        source: '/pocket-scanner/:path*',
+        destination: 'https://simpletoolslabs.co.in/pocket-scanner/:path*',
+        permanent: true,
+      },
+    ];
+  },
+
   async headers() {
     return [
       {
